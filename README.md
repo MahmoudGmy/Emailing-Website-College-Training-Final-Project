@@ -87,3 +87,25 @@ The server listens on port `3001`:
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+```
+
+## 📷 Screenshots Here are some screenshots from the platform:
+**Home page**:
+
+ ![home](image/home.png)
+
+**signup**:
+
+ ![signup](image/signup.png)
+
+ **Send Email**:
+
+ ![send](image/send.png)
+
+ **Profile page**
+
+ ![profile](image/profile.png)
+
+ **viwe message**:
+
+ ![viwe](image/viwe.png)
