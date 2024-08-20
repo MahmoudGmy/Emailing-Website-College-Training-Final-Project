@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Message</title>
+    <link rel="stylesheet" href="style_message_page.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./message.html">Submit Message</a></li>
+            <li><a href="./view_message.html">View Message</a></li>
+            <li><a href="./account.html">Account</a></li>
+        </ul>
+    </header>
+    <div class="main-content" id="main">
+        <h1>Submit a Message</h1>
+        <p>To submit a message, please fill out the form below with the required information: your name, email, and the
+            message you wish to send.</p>
+        <form id="myform" action="/submit" method="POST">
+            <label for="first_name" style="margin-top: 10px;">First name</label>
+            <input type="text" id="first_name" name="first_name" required placeholder="Enter your first name">
+
+            <label for="last_name" style="margin-top: 10px;">Last name</label>
+            <input type="text" id="last_name" name="last_name" required placeholder="Enter your last name">
+
+            <label for="email">Reciever email</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+            <div id="emailerror"></div>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required placeholder="Enter what you whish"></textarea>
+            <div id="messageerror"></div>
+
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+    <div id="not_main"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
