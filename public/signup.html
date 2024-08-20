@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="./signup_style.css">
+</head>
+
+<body>
+
+    <form id="signup_form">
+        <label for="First">First Name</label>
+        <input type="text" id="First" name="first_name" placeholder="Enter your first name" required>
+
+        <label for="Last">Last Name</label>
+        <input type="text" id="Last" name="last_name" placeholder="Enter your last name" required>
+
+        <label for="EMAIL2">Email</label>
+        <input type="email" id="EMAIL2" name="email" placeholder="Enter your email" required>
+
+        <label for="Password1">Password</label>
+        <input type="password" id="Password1" name="password" placeholder="Enter your password" required>
+
+        <label for="Password2">Confirm Password</label>
+        <input type="password" id="Password2" placeholder="Re-enter your password" required>
+        
+
+        <label for="Phone">Phone Number</label>
+        <input type="text" id="Phone" name="phone_number" placeholder="Enter your phone number" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+        document.getElementById('signup_form').addEventListener('submit', async function (event) {
+            event.preventDefault(); 
+
+            const formData = {
+                first_name: document.getElementById('First').value,
+                last_name: document.getElementById('Last').value,
+                email: document.getElementById('EMAIL2').value,
+                password: document.getElementById('Password1').value,
+                confirm_password: document.getElementById('Password2').value,
+                phone_number: document.getElementById('Phone').value
+            };
+
+
+            
+            if (formData.password !== formData.confirm_password) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    
+                    localStorage.setItem('authToken', result.token);
+                    alert('User registered successfully!');
+
+                    
+                                window.location.href = '/Profile';
+                    
+
+                } else {
+                    alert(result.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error.message);
+                alert('An error occurred while registering');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
