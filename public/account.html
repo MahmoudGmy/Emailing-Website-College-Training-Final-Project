@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="./account_style.css">
+</head>
+
+<body>
+    
+    <header>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./message.html">Submit Message</a></li>
+            <li><a href="./view_message.html">View Message</a></li>
+            <li><a href="./account.html">Account</a></li>
+        </ul>
+    </header>
+<div id="main">
+    <main>
+        <section class="user-details">
+            <img id="img" src="photos/images.jpeg" alt="User Photo" class="user-photo">
+            <h1 id="h1"></h1>
+            <div class="user-info">
+                <p><strong>Email:</strong><p id="p1"></p></p>
+                <p><strong>Phone:</strong>
+                <p id="p2">January 1, 2024</p>
+                </p>
+                <p><strong>Joined:</strong>January 1, 2024</p>
+                <p><strong>Last Login:</strong>August 18, 2024</p>
+            </div>
+            <button id="logout-button">Log Out</button>
+        </section>
+    </main>
+</div>
+    <footer>&copy; 2024 Message Website</footer>
+    
+    <div id="not_main"></div>
+    <script>
+    fetch('/api/users', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('h1').innerText = `Welcome ${data.first_name} ${data.last_name}`;
+                document.getElementById('p1').innerText = `${data.email}`;
+                document.getElementById('p2').innerText = `${data.phone_number}`;
+            })
+            .catch(error => console.error('Error:', error));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+           
+            document.getElementById("main").style.display = "none";
+
+            
+            document.getElementById('not_main').innerHTML = `
+        <div>
+        Please Login First To See Your Account. 
+        <a href="./index.html">Click here to login</a>.
+        </div>
+        <br>
+        <div>
+        Sign Up If You Don't Have Account.
+        <a href="./signup.html">Click here to sign up</a>
+        </div>
+
+    `;
+        }
+        document.getElementById("logout-button").addEventListener("click",(event)=>{
+            localStorage.removeItem('authToken');
+            window.location.href='/'
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>
