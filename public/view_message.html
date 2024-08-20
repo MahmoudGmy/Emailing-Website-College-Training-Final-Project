@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Messages</title>
+    <link rel="stylesheet" href="./style_view_message.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./message.html">Submit Message</a></li>
+            <li><a href="./view_message.html">View Message</a></li>
+            <li><a href="./account.html">Account</a></li>
+        </ul>
+    </header>
+    <div id="main">
+    <div class="main-content">
+        <h1>View Messages</h1>
+        <div class="grid-container" id="messages-container">
+        </div>
+    </div>
+    <footer>© 2024 Message Website</footer>
+    </div> <div id="not_main"></div>
+    <script>
+        fetch('/api/messages', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('messages-container');
+                data.messages.forEach(message => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message');
+
+                    const senderEmailDiv = document.createElement('div');
+                    senderEmailDiv.classList.add('email');
+                    senderEmailDiv.textContent = `Sender Email: ${message.sender_email}`;
+
+                    const receiverEmailDiv = document.createElement('div');
+                    receiverEmailDiv.classList.add('email');
+                    receiverEmailDiv.textContent = `Receiver Email: ${message.receiver_email}`;
+
+                    const bodyDiv = document.createElement('div');
+                    bodyDiv.classList.add('message-body');
+                    bodyDiv.textContent = `Message: ${message.message_body}`;
+
+                    messageDiv.appendChild(senderEmailDiv);
+                    messageDiv.appendChild(receiverEmailDiv);
+                    messageDiv.appendChild(bodyDiv);
+
+                    container.appendChild(messageDiv);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+            const token = localStorage.getItem('authToken');
+
+                if (!token) {
+
+                    document.getElementById("main").style.display = "none";
+
+
+                    document.getElementById('not_main').innerHTML = `
+        <div>
+        Please Login First To See Your Account. 
+        <a href="./index.html">Click here to login</a>.
+        </div>
+        <br>
+        <div>
+        Sign Up If You Don't Have Account.
+        <a href="./signup.html">Click here to sign up</a>
+        </div>
+    `;
+                }
+
+    </script>
+</body>
+
+</html>
