@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Website</title>
+    <link rel="stylesheet" href="style_Home_page.css">
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./message.html">Submit Message</a></li>
+            <li><a href="./view_message.html">View Message</a></li>
+            <li><a href="./account.html">Account</a></li>
+           
+        </ul>
+    </header>
+
+    <div class="main-content">
+        <div id="main">
+            <h1>Welcome to the Message Website</h1>
+            <p>This website allows users to send <br>messages by form and view these <br> messages
+                in a table on a separate <br> page. It's a simple and efficient way <br>to communicate between others 
+                </p>
+        </div>
+        <div id="form">
+            <h3>Please Login</h3>
+            <form action="/login" method="post" id="login_form">
+                <label for="EMAIL">Email</label>
+                <input type="email" id="EMAIL" placeholder="Enter your email">
+                <label for="PASSWORD">Password</label>
+                <input type="password" id="PASSWORD" placeholder="Enter your password">
+                <button type="submit" >Login</button>
+            </form>
+            <p>If you don't have an account, <a href="./signup.html">register</a> now.</p>
+        </div>
+    </div>
+
+
+    <footer>&copy; 2024 Message Website</footer>
+</body>
+
+</html>
+
+<script>
+document.getElementById('login_form').addEventListener('submit',async (event)=>{
+    event.preventDefault();
+   
+    const formData={
+        email: document.getElementById('EMAIL').value,
+        password:document.getElementById('PASSWORD').value
+    }
+    try{ 
+        const response =await fetch('/login',{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(formData)
+        })
+
+        const result= await response.json();
+        console.log("trying");
+        
+    
+
+        if (response.ok) {
+            localStorage.setItem('authToken', result.token);
+            window.location.href = '/Profile';
+            
+            
+        } else {
+            alert(result.message || 'An error occurred');
+        }
+
+    } catch(error){
+        console.error('Error:', error.message);
+        return res.status(500).json({ message: 'Error verifying password' });
+
+    }
+})
+
+
+
+</script>
